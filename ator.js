@@ -1,6 +1,6 @@
 //código do ator
 
-let xAtor = 100;
+let xAtor = Math.floor(Math.random() * 370)+30;
 let yAtor = 366
 
 function mostraAtor(){
