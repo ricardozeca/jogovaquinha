@@ -1,11 +1,12 @@
 //código do ator
 
-let xAtor = Math.floor(Math.random() * 370) + 30;
-let yAtor = 366;
+let xAtor = Math.floor(Math.random() * 360) + 30;
+let yAtor = 371;
 let colisao = false;
+let meusPontos = 0
 
 function mostraAtor() {
-  image(imagemDoAtor, xAtor, yAtor, 30, 30);
+  image(imagemDoAtor, xAtor, yAtor, 25, 25);
 }
 
 function movimentaAtor() {
@@ -13,11 +14,12 @@ function movimentaAtor() {
     yAtor -= 3;
   }
   if (keyIsDown(DOWN_ARROW)) {
-    yAtor += 3;
+    if(podeSeMover())
+      yAtor += 3;
   }
 }
 
-//preciso pensar o que vou fazer aqui
+
 function verificaColisao() {
   for (let i = 0; i < imagemCarros.length; i = i + 1) {
     colisao = collideRectCircle(
@@ -30,8 +32,35 @@ function verificaColisao() {
       30
     );
     if (colisao) {
-      xAtor = Math.floor(Math.random() * 370) + 30;
-      yAtor = 366;
+      voltaAtorParaPosicaoInicial();
+      somDaColisao.play();
+      if (meusPontos > 0){
+        meusPontos -= 1;
+      }
     }
   }
+}
+
+function voltaAtorParaPosicaoInicial(){
+  xAtor = Math.floor(Math.random() * 360) + 30;
+  yAtor = 371;
+}
+
+function incluiPontos (){
+  textAlign(CENTER);
+  textSize(25);
+  fill(color(255,255,0))
+  text(meusPontos,width / 30, 27);
+}
+
+function marcaPonto (){
+  if (yAtor < 15){
+    meusPontos  += 1;
+    somDoPonto.play();
+    voltaAtorParaPosicaoInicial();
+  }
+}
+
+function  podeSeMover (){
+  return yAtor < 371;
 }
